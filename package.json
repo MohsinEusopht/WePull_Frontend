@@ -1,0 +1,64 @@
+{
+  "name": "WePull",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "homepage": "http://192.168.100.14:3001",
+  "engines": {
+    "npm": "6.14.13",
+    "node": "14.17.3"
+  },
+  "scripts": {
+    "start": "craco start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mohsin Javed",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@stripe/react-stripe-js": "^1.10.0",
+    "@stripe/stripe-js": "^1.35.0",
+    "axios": "^0.27.2",
+    "babel-plugin-macros": "^3.1.0",
+    "bootstrap": "^5.2.0",
+    "canvasjs-react-charts": "^1.0.5",
+    "craco": "0.0.3",
+    "encrypt-storage": "^2.11.2",
+    "fs": "0.0.1-security",
+    "moment": "^2.29.4",
+    "multiselect-react-dropdown": "^2.0.25",
+    "path": "^0.12.7",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
+    "react-confirm-box": "^1.2.0",
+    "react-data-table-component": "^7.5.3",
+    "react-data-table-component-extensions": "^1.6.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.3.0",
+    "react-inner-image-zoom": "^3.0.2",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "request": "^2.88.2",
+    "styled-components": "^5.3.5",
+    "validator": "^13.7.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "ant-design-pro": "^2.3.2"
+  }
+}

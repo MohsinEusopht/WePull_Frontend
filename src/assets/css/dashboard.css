@@ -1,0 +1,214 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .db-categories {
+        width: 50%;
+    }
+
+    .db-view-as {
+        width: 50%;
+    }
+
+    .db-expense-type {
+        width: 50%;
+    }
+
+    .db-suppliers {
+        width:50%;
+    }
+
+    .db-status {
+        width: 30%;
+    }
+
+    .db-filter-as {
+        width: 70%;
+    }
+
+    .db-month {
+        width: 100%;
+    }
+
+    .db-week {
+        width: 100%;
+    }
+
+    .db-custom {
+        width: 100%;
+    }
+
+    .db-btn {
+        width: 100%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .db-categories {
+        width: 50%;
+    }
+
+    .db-view-as {
+        width: 50%;
+    }
+
+    .db-expense-type {
+        width: 50%;
+    }
+
+    .db-suppliers {
+        width: 50%;
+    }
+
+    .db-status {
+        width: 30%;
+    }
+
+    .db-filter-as {
+        width: 70%;
+    }
+
+    .db-month {
+        width: 100%;
+    }
+
+    .db-week {
+        width: 100%;
+    }
+
+    .db-custom {
+        width: 100%;
+    }
+
+    .db-btn {
+        width: 50%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .db-categories {
+        width: 30%;
+    }
+
+    .db-view-as {
+        width: 30%;
+    }
+
+    .db-expense-type {
+        width: 25%;
+    }
+
+    .db-suppliers {
+        width: 25%;
+    }
+
+    .db-status {
+        width: 15%;
+    }
+
+    .db-filter-as {
+        width: 22%;
+    }
+
+    .db-month {
+        width: 30%;
+    }
+
+    .db-week {
+        width: 30%;
+    }
+
+    .db-custom {
+        width: 50%;
+    }
+
+    .db-btn {
+        width: 30%;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .db-categories {
+        width: 20%;
+    }
+
+    .db-view-as {
+        width: 20%;
+    }
+
+    .db-expense-type {
+        width: 25%;
+    }
+
+    .db-suppliers {
+        width: 25%;
+    }
+
+    .db-status {
+        width: 15%;
+    }
+
+    .db-filter-as {
+        width: 15%;
+    }
+
+    .db-month {
+        width: 20%;
+    }
+
+    .db-week {
+        width: 20%;
+    }
+
+    .db-custom {
+        width: 35%;
+    }
+
+    .db-btn {
+        width: 30%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .db-categories {
+        width: 10%;
+    }
+
+    .db-view-as {
+        width: 10%;
+    }
+
+    .db-expense-type {
+        width: 15%;
+    }
+
+    .db-suppliers {
+        width: 15%;
+    }
+
+    .db-status {
+        width: 10%;
+    }
+
+    .db-filter-as {
+        width: 12%;
+    }
+
+    .db-month {
+        width: 15%;
+    }
+
+    .db-week {
+        width: 15%;
+    }
+
+    .db-custom {
+        width: 30%;
+    }
+
+    .db-btn {
+        width: 20%;
+    }
+}
