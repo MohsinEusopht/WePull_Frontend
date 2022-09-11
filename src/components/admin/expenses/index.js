@@ -41,10 +41,6 @@ function expenses(props) {
     }
 
     const getExpenses = async (company_id) => {
-        const headers = {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${encryptStorage.getItem("token")}`,
-        };
         let url = null;
         if(encryptStorage.getItem("company-type") == "xero") {
             url = makeUrl('users', `getExpenses/xero/${company_id}`);
@@ -61,11 +57,22 @@ function expenses(props) {
                         if(res.data.status === 200) {
                             response = res.data.data;
                             let expense = 0;
-                            for (let i=0;i<response.length;i++) {
-                                console.log(response[i]);
-                                if(response[i].is_paid.toString() === "false") {
-                                    let tax = response[i].tax?response[i].tax:0;
-                                    expense += +response[i].total_amount + +tax;
+                            if(encryptStorage.getItem("company-type") == "xero") {
+                                for (let i=0;i<response.length;i++) {
+                                    console.log(response[i]);
+                                    if(response[i].is_paid.toString() === "false") {
+                                        let tax = response[i].tax!==null?response[i].tax:0;
+                                        expense += +response[i].total_amount + +tax;
+                                    }
+                                }
+                            }
+                            else {
+                                for (let i=0;i<response.length;i++) {
+                                    console.log(response[i]);
+                                    if(response[i].is_paid.toString() === "true") {
+                                        let tax = response[i].tax!==null?response[i].tax:0;
+                                        expense += +response[i].total_amount + +tax;
+                                    }
                                 }
                             }
 

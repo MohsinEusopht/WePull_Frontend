@@ -11,9 +11,15 @@ import { toast } from "react-hot-toast";
 import NavBar from "../../navigation/nav_bar";
 import SideNavigation from "../../navigation/side_navigation";
 import {useNavigate} from "react-router";
+import icons from '../../../assets/image/icons';
 function profile(props) {
     const navigate = useNavigate();
     const [user, setUser] = useState([]);
+    const [email, setEmail] = useState(encryptStorage.getItem('user').email);
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${encryptStorage.getItem("token")}`,
+    };
 
     //run when render
     useEffect(() => {
@@ -27,6 +33,34 @@ function profile(props) {
             props.setLoading(false);
         },1500)
     }, []);
+
+    let refreshingEmail = false;
+    const handleSyncEmail = async () => {
+        if(!refreshingEmail) {
+            refreshingEmail = true;
+            const loadingToast = toast.loading('Refreshing email...');
+            let url = "";
+            if (encryptStorage.getItem("company-type") === "xero") {
+                url = makeUrl('xero',`sync/email/${encryptStorage.getItem('uid')}`);
+            }
+            else {
+                url = makeUrl('quickbooks',`sync/email/${encryptStorage.getItem('uid')}/${encryptStorage.getItem('company-id')}`);
+            }
+            await axios.get(url, {headers}).then((res) => {
+                console.log("res",res);
+                toast.remove(loadingToast);
+                if(res.data.status === 200) {
+                    refreshingEmail = false;
+                    toast.success(res.data.message);
+                    encryptStorage.setItem('user', res.data.user);
+                    setEmail(res.data.user.email);
+                }
+                else {
+                    toast.error(res.data.message);
+                }
+            });
+        }
+    }
 
     return (<div style={{overflow:"hidden"}}>
         <div className={"col-md-12 row mt-4 p-2"} style={{height:"100vh",display:"flex",alignItems:"center"}}>
@@ -46,7 +80,8 @@ function profile(props) {
                         </tr>
                         <tr>
                             <th>Email</th>
-                            <td>{user.email}</td>
+                            <td>{email}
+                            <span><img src={icons.refresh} style={{cursor:"pointer",float:"right"}} title={"Refresh Email Address"} onClick={handleSyncEmail} width={"20px"}/></span></td>
                         </tr>
                         <tr>
                             <th>Company Type</th>

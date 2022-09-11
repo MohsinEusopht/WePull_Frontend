@@ -156,118 +156,128 @@ function companies(props) {
         }
     }
 
+    let disconnectingStatus = false;
     const handleDisconnect = async (e) => {
-        const company_id = e.target.getAttribute("data-id");
-
-        if (data.length === 1) {
-            const options = {
-                labels: {
-                    confirmable: "I Understand",
-                    cancellable: "Cancel"
+        if(!disconnectingStatus) {
+            disconnectingStatus = true;
+            const company_id = e.target.getAttribute("data-id");
+            if (data.length === 1) {
+                const options = {
+                    labels: {
+                        confirmable: "I Understand",
+                        cancellable: "Cancel"
+                    }
                 }
-            }
-            const result = await confirm("If you disconnect this company from WePull, you will need to sign up for your account again.", options);
-            if(result) {
-                console.log("disconnect called", company_id);
-                if (encryptStorage.getItem("company-type") === "quickbooks") {
-                    axios.get(makeUrl('quickbooks',`disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
-                        .then(async (res) => {
-                            console.log(res)
-                            if(res.data.status === 200) {
-                                toast.success(res.data.message);
-                                const response = await logout();
-                                // console.log(response);
-                                const toastId = toast.loading('Logging out...');
-                                setTimeout(async () => {
-                                    toast.remove(toastId);
-                                    if(response.status) {
-                                        // toast.success(response.message);
-                                        navigate("/login");
-                                    }
-                                },1500);
-                                // toast.success(res.data.active_company + " activated.");
-                            }
-                            else {
-                                toast.error(res.data.message);
-                            }
-                        })
-                }
-                else if (encryptStorage.getItem("company-type") === "xero") {
-                    axios.get(makeUrl('xero',`disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
-                        .then(async (res) => {
-                            console.log(res)
-                            if(res.data.status === 200) {
-                                toast.success(res.data.message);
-                                const response = await logout();
-                                // console.log(response);
-                                const toastId = toast.loading('Logging out...');
-                                setTimeout(async () => {
-                                    toast.remove(toastId);
-                                    if(response.status) {
-                                        // toast.success(response.message);
-                                        navigate("/login");
-                                    }
-                                },1500);
-                                // toast.success(res.data.active_company + " activated.");
-                            }
-                            else {
-                                toast.error(res.data.message);
-                            }
-                        })
-                }
-            }
-        }
-        else {
-            const result = await confirm("Are you sure, you want to disconnect that company from WePull?");
-            if (result) {
-                console.log("disconnect called", company_id);
-                if (encryptStorage.getItem("company-type") === "quickbooks") {
-                    axios.get(makeUrl('quickbooks',`disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
-                        .then(async (res) => {
-                            console.log(res)
-                            if(res.data.status === 200) {
-                                toast.success(res.data.message);
-                                await activateCompany(res.data.active_company).then(async () => {
-                                    await getCompanies(encryptStorage.getItem("uid")).then((response) => {
-                                        if (response !== null) {
-                                            console.log("Companies response", response);
-                                            setData(response);
-                                            window.location.reload();
-                                        } else {
-                                            toast.error("Something went wrong.");
+                const result = await confirm("If you disconnect this company from WePull, you will need to sign up for your account again.", options);
+                if (result) {
+                    const loadingToast = toast.loading('Disconnecting a company...');
+                    console.log("disconnect called", company_id);
+                    if (encryptStorage.getItem("company-type") === "quickbooks") {
+                        axios.get(makeUrl('quickbooks', `disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
+                            .then(async (res) => {
+                                console.log(res)
+                                if (res.data.status === 200) {
+                                    toast.remove(loadingToast);
+                                    toast.success(res.data.message);
+                                    const response = await logout();
+                                    // console.log(response);
+                                    const toastId = toast.loading('Logging out...');
+                                    setTimeout(async () => {
+                                        toast.remove(toastId);
+                                        if (response.status) {
+                                            // toast.success(response.message);
+                                            navigate("/login");
                                         }
-                                    });
-                                });
-                            }
-                            else {
-                                toast.error(res.data.message);
-                            }
-                        })
-                }
-                else if (encryptStorage.getItem("company-type") === "xero") {
-                    axios.get(makeUrl('xero',`disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
-                        .then(async (res) => {
-                            console.log(res)
-                            if(res.data.status === 200) {
-                                toast.success(res.data.message);
-                                await activateCompany(res.data.active_company).then(async () => {
-                                    await getCompanies(encryptStorage.getItem("uid")).then((response) => {
-                                        if (response !== null) {
-                                            console.log("Companies response", response);
-                                            setData(response);
-                                            window.location.reload();
-                                        } else {
-                                            toast.error("Something went wrong.");
+                                    }, 1500);
+                                    // toast.success(res.data.active_company + " activated.");
+                                } else {
+                                    toast.error(res.data.message);
+                                }
+                            })
+                    } else if (encryptStorage.getItem("company-type") === "xero") {
+                        axios.get(makeUrl('xero', `disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
+                            .then(async (res) => {
+                                console.log(res)
+                                if (res.data.status === 200) {
+                                    toast.remove(loadingToast);
+                                    toast.success(res.data.message);
+                                    const response = await logout();
+                                    // console.log(response);
+                                    const toastId = toast.loading('Logging out...');
+                                    setTimeout(async () => {
+                                        toast.remove(toastId);
+                                        if (response.status) {
+                                            // toast.success(response.message);
+                                            navigate("/login");
                                         }
-                                    });
-                                });
-                            }
-                            else {
-                                toast.error(res.data.message);
-                            }
-                        })
+                                    }, 1500);
+                                    // toast.success(res.data.active_company + " activated.");
+                                } else {
+                                    toast.error(res.data.message);
+                                }
+                            })
+                    }
                 }
+                else {
+                    disconnectingStatus = false;
+                }
+            } else {
+                const result = await confirm("Are you sure, you want to disconnect that company from WePull?");
+                if (result) {
+                    const loadingToast = toast.loading('Disconnecting a company...');
+                    console.log("disconnect called", company_id);
+                    if (encryptStorage.getItem("company-type") === "quickbooks") {
+                        axios.get(makeUrl('quickbooks', `disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
+                            .then(async (res) => {
+                                console.log(res)
+                                if (res.data.status === 200) {
+                                    disconnectingStatus = false;
+                                    toast.remove(loadingToast);
+                                    toast.success(res.data.message);
+                                    await activateCompany(res.data.active_company).then(async () => {
+                                        await getCompanies(encryptStorage.getItem("uid")).then((response) => {
+                                            if (response !== null) {
+                                                console.log("Companies response", response);
+                                                setData(response);
+                                                window.location.reload();
+                                            } else {
+                                                toast.error("Something went wrong.");
+                                            }
+                                        });
+                                    });
+                                } else {
+                                    toast.error(res.data.message);
+                                }
+                            })
+                    } else if (encryptStorage.getItem("company-type") === "xero") {
+                        axios.get(makeUrl('xero', `disconnect/${encryptStorage.getItem("uid")}/${company_id}`), {headers})
+                            .then(async (res) => {
+                                console.log(res)
+                                if (res.data.status === 200) {
+                                    disconnectingStatus = false;
+                                    toast.remove(loadingToast);
+                                    toast.success(res.data.message);
+                                    await activateCompany(res.data.active_company).then(async () => {
+                                        await getCompanies(encryptStorage.getItem("uid")).then((response) => {
+                                            if (response !== null) {
+                                                console.log("Companies response", response);
+                                                setData(response);
+                                                window.location.reload();
+                                            } else {
+                                                toast.error("Something went wrong.");
+                                            }
+                                        });
+                                    });
+                                } else {
+                                    toast.error(res.data.message);
+                                }
+                            })
+                    }
 
+                }
+                else {
+                    disconnectingStatus = false;
+                }
             }
         }
     }

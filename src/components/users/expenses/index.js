@@ -128,9 +128,17 @@ function expenses(props) {
                         console.log("if category ids",categoryIds.toString(),"includes",response[i].category2_id);
                         if(categoryIds.includes(response[i].category1_id) || categoryIds.includes(response[i].category2_id)) {
                             expenses.push(response[i]);
-                            if(response[i].is_paid.toString() === "false") {
-                                let tax = response[i].tax?response[i].tax:0;
-                                expense += +response[i].total_amount + +tax;
+                            if(encryptStorage.getItem("company-type") == "xero") {
+                                if(response[i].is_paid.toString() === "false") {
+                                    let tax = response[i].tax?response[i].tax:0;
+                                    expense += +response[i].total_amount + +tax;
+                                }
+                            }
+                            else {
+                                if(response[i].is_paid.toString() === "true") {
+                                    let tax = response[i].tax?response[i].tax:0;
+                                    expense += +response[i].total_amount + +tax;
+                                }
                             }
                         }
                     }
