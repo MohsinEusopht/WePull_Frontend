@@ -104,7 +104,7 @@ function users(props) {
 
             setTimeout(() => {
                 props.setLoading(false);
-                },1500)
+                }, 800)
 
         });
         // toast.success('Successfully toasted!')

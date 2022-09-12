@@ -21,7 +21,6 @@ function attachment(props) {
         "Authorization": `Bearer ${encryptStorage.getItem("token")}`,
     };
 
-
     const getXeroAttachment = async () => {
         const user_id = encryptStorage.getItem("user-type")==="admin"?encryptStorage.getItem("uid"):encryptStorage.getItem("user").created_by;
         const company_id = encryptStorage.getItem("company-id");
@@ -73,18 +72,46 @@ function attachment(props) {
         return response;
     }
 
+    function isPdf(array) {
+        let res = false;
+
+        if(array[0] === 37 && array[1] === 80 && array[2] === 68) {
+            res = true;
+        }
+        return res;
+    }
+
     useEffect(() => {
         try {
             if(encryptStorage.getItem("company-type") === "xero") {
                 getXeroAttachment().then((response) => {
-                    console.log("response",response);
+                    console.table(response.data[0]);
 
-                    const base64String = btoa(String.fromCharCode(...new Uint8Array(response.data)));
-                    console.log("base64",base64String);
-                    setImage("data:image/jpg;base64," +base64String);
-                    setTimeout(() => {
-                        props.setLoading(false);
-                        },2000)
+                    if (isPdf(response.data)) {
+                        // console.log("file is pdf")
+                        let len = response.data.length;
+                        let bytes = new Uint8Array( len );
+                        for (let i = 0; i < len; i++){
+                            bytes[i] = response.data[i];
+                        }
+
+                        const renderPdf = bytes.buffer;
+
+                        const file = new Blob([renderPdf], { type: 'application/pdf' });
+                        const fileURL = URL.createObjectURL(file);
+                        window.location.href = fileURL;
+
+                    }
+                    else {
+                        // console.log("file is not a pdf")
+                        const base64String = btoa(String.fromCharCode(...new Uint8Array(response.data)));
+                        console.log("base64",base64String);
+                        setImage("data:image/gif;base64," +base64String);
+                        setTimeout(() => {
+                            props.setLoading(false);
+                            },2000)
+                    }
+
                 });
             }
             else if(encryptStorage.getItem("company-type") === "quickbooks") {

@@ -161,7 +161,7 @@ function SetupAccount(props) {
 
             setTimeout(function () {
                 navigate('/');
-            },1500)
+            }, 800)
         } catch (e) {
             console.log(e);
         }

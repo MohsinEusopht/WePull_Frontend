@@ -31,7 +31,7 @@ function profile(props) {
         // console.log(encryptStorage.getItem("current-page"))
         setTimeout(() => {
             props.setLoading(false);
-        },1500)
+        }, 800)
     }, []);
 
     let refreshingEmail = false;

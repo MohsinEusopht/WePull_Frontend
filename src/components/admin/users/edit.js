@@ -113,7 +113,7 @@ function editUser(props) {
         encryptStorage.setItem("current-page","users");
         setTimeout(() => {
             props.setLoading(false);
-        },1500)
+        }, 800)
 
         getCategoriesForUserCreation(encryptStorage.getItem("company-id")).then(async (response) => {
             if (response !== null) {

@@ -42,7 +42,7 @@ export default function SideNavigation(props){
                     // toast.success(response.message);
                     navigate("/login");
                 }
-            },1500);
+            }, 800);
         }
     }
 

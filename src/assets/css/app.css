@@ -235,6 +235,24 @@ li.option:hover {
     /*padding: 20px 10px 0px 10px !important;*/
 }
 
+.filter-left {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.filter-right {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+.filter-center {
+    border-radius: 0px !important;
+}
+
 .filter-btn {
     background-color: white !important;
     border:2px solid #efefef;

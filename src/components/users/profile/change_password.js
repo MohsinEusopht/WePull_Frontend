@@ -40,7 +40,7 @@ function change_password(props) {
         encryptStorage.setItem("current-page","profile")
         setTimeout(() => {
             props.setLoading(false);
-        }, 1500)
+        }, 800)
     }, []);
 
     const handleChangePassword = async () => {

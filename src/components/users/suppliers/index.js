@@ -144,7 +144,7 @@ function suppliers(props) {
 
                             setTimeout(() => {
                                 props.setLoading(false);
-                            },1500)
+                            }, 800)
                         });
                     }
                     else {
@@ -156,7 +156,7 @@ function suppliers(props) {
 
             // setTimeout(() => {
             //     props.setLoading(false);
-            //     },1500)
+            //     }, 800)
 
         // });
         // toast.success('Successfully toasted!')

@@ -49,7 +49,7 @@ function profile(props) {
             // console.log("categories",categories);
             setTimeout(() => {
                 props.setLoading(false);
-            }, 1500)
+            }, 800)
         });
         setUser(encryptStorage.getItem('user'));
     }, []);

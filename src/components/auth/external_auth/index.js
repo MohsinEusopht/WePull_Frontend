@@ -26,6 +26,7 @@ function externalAuth(props) {
             token: token
         };
 
+        console.log("bodyy",body)
         await axios
             .post(makeUrl('users','auth_login'), body)
             .then((res) => {
@@ -76,6 +77,7 @@ function externalAuth(props) {
             props.setLoading(false);
             setTimeout(()=> {
                 login(email, token).then((res) => {
+                    console.log("res",res);
                     if(res) {
                         navigate('/dashboard');
                     }
@@ -100,7 +102,7 @@ function externalAuth(props) {
     },[]);
 
     return (<div style={{position:"relative",width:"100%",height:"100vh",display: type === "sign-up"?"block":"none"}} className={type === "sign-up"?"bg-light":"bg-white"}>
-        <div className={"col-md-4 offset-md-4 centerDiv bg-white shadow-sm"}>
+        <div className={"col-lg-4 offset-lg-4 col-md-6 offset-md-3 centerDiv bg-white shadow-sm"}>
             <img src={logo} width={"40%"} className={"mx-auto d-block"}/>
             <hr/>
             <img src={sync} style={{width:"300px"}} className={"mx-auto d-block"} alt={"Syncing Data..."}/>

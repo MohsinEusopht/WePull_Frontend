@@ -166,7 +166,7 @@ function resetPassword(props) {
     }
     return (
         <div className="bg-light">
-            <div className="col-md-4 offset-md-4 p-3 bg-white centerDiv">
+            <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 p-3 bg-white centerDiv">
                 <div className="mb-6 flex justify-center">
                     <img
                         alt="logo"

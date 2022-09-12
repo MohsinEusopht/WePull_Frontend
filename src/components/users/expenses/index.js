@@ -159,7 +159,7 @@ function expenses(props) {
 
                 setTimeout(() => {
                     props.setLoading(false);
-                },1500)
+                }, 800)
                 // });
             });
         });

@@ -181,18 +181,25 @@ function dashboard(props) {
 
         setTimeout(() => {
             props.setLoading(false);
-        },1500)
+        }, 800)
 
     }, []);
 
     const filterAccountsAndSuppliersByExpenses = (expenses) => {
-
         let accountsArray = [];
         let accountIDs = [];
         //Filter expense accounts
         for (let i = 0; i < expenses.length; i++) {
             if(!accountIDs.includes(expenses[i].account_id)) {
-                accountsArray.push({id: expenses[i].account_id, name: expenses[i].account_name});
+                let accName = "";
+                if(expenses[i].account_name.length > 16) {
+                    accName = expenses[i].account_name.substring(0, 16) + "...";
+                }
+                else {
+                    accName = expenses[i].account_name;
+                }
+
+                accountsArray.push({id: expenses[i].account_id, name: accName});
                 accountIDs.push(expenses[i].account_id);
             }
         }
@@ -205,7 +212,14 @@ function dashboard(props) {
         //Filter expense supplier
         for (let i = 0; i < expenses.length; i++) {
             if(!supplierIDs.includes(expenses[i].supplier_id)) {
-                suppliersArray.push({id: expenses[i].supplier_id, name: expenses[i].supplier_name});
+                let suppName = "";
+                if(expenses[i].supplier_name.length > 16) {
+                    suppName = expenses[i].supplier_name.substring(0, 16) + "...";
+                }
+                else {
+                    suppName = expenses[i].supplier_name;
+                }
+                suppliersArray.push({id: expenses[i].supplier_id, name: suppName});
                 supplierIDs.push(expenses[i].supplier_id);
             }
         }
@@ -255,11 +269,54 @@ function dashboard(props) {
 
             //Filter dates for expenses
             if (from !== null && to !== null) {
+                let accountsArray = [];
+                let accountIDs = [];
+
+                let suppliersArray = [];
+                let supplierIDs = [];
+
                 for (let i = 0; i < expenses.length; i++) {
                     if (new Date(moment(expenses[i].expense_date).toDate()).getTime() >= new Date(from).getTime() && new Date(moment(expenses[i].expense_date).toDate()).getTime() <= new Date(moment(to).add(1, 'day').toDate()).getTime()) {
                         filteredExpensesAfterDateFiltration.push(expenses[i]);
+                        if(!accountIDs.includes(expenses[i].account_id)) {
+                            let accName = "";
+                            if(expenses[i].account_name.length > 16) {
+                                accName = expenses[i].account_name.substring(0, 16) + "...";
+                            }
+                            else {
+                                accName = expenses[i].account_name;
+                            }
+
+                            accountsArray.push({
+                                id: expenses[i].account_id,
+                                name: accName
+                            });
+                            console.log("account ",expenses[i].account_name,"length",expenses[i].account_name.length)
+
+                            accountIDs.push(expenses[i].account_id);
+                        }
+
+
+                        if (!supplierIDs.includes(expenses[i].supplier_id)) {
+                            let suppName = "";
+                            if(expenses[i].supplier_name.length > 16) {
+                                suppName = expenses[i].supplier_name.substring(0, 16) + "...";
+                            }
+                            else {
+                                suppName = expenses[i].supplier_name;
+                            }
+                            suppliersArray.push({
+                                id: expenses[i].supplier_id,
+                                name: suppName
+                            });
+                            supplierIDs.push(expenses[i].supplier_id);
+                        }
+
                     }
                 }
+
+                setAccounts(accountsArray);
+                setFilteredSuppliers(suppliersArray);
             } else {
                 filteredExpensesAfterDateFiltration = expenses;
             }
@@ -273,13 +330,17 @@ function dashboard(props) {
                         filteredExpensesAfterAccountsFiltration.push(filteredExpensesAfterDateFiltration[i]);
 
                         //Filter suppliers by account selections
-                        if (!supplierIDs.includes(filteredExpensesAfterDateFiltration[i].supplier_id)) {
-                            suppliersArray.push({
-                                id: filteredExpensesAfterDateFiltration[i].supplier_id,
-                                name: filteredExpensesAfterDateFiltration[i].supplier_name
-                            });
-                            supplierIDs.push(filteredExpensesAfterDateFiltration[i].supplier_id);
+                        let suppName = "";
+                        if(filteredExpensesAfterDateFiltration[i].supplier_name.length > 16) {
+                            suppName = filteredExpensesAfterDateFiltration[i].supplier_name.substring(0, 16) + "...";
                         }
+                        else {
+                            suppName = filteredExpensesAfterDateFiltration[i].supplier_name;
+                        }
+                        suppliersArray.push({
+                            id: filteredExpensesAfterDateFiltration[i].supplier_id,
+                            name: suppName
+                        });
                     }
                 }
                 setFilteredSuppliers(suppliersArray);
@@ -322,12 +383,12 @@ function dashboard(props) {
                         const createLineChartResponse = await createLineChart(createDataForExpensesChartResponse);
                         setTimeout(() => {
                             setChartOptions(createLineChartResponse);
-                        },1500)
+                        }, 800)
                     }
                     else {
                         setTimeout(() => {
                             setChartOptions({isLoading: false});
-                        },1500);
+                        }, 800);
                         setIsChartDataAvailable(false);
                     }
                     // console.log("line chart option set",createLineChartResponse)
@@ -339,12 +400,12 @@ function dashboard(props) {
                         const createColumnChartResponse = await createColumnChart(createDataForExpensesChartResponse);
                         setTimeout(() => {
                             setChartOptions(createColumnChartResponse);
-                        },1500)
+                        }, 800)
                     }
                     else {
                         setTimeout(() => {
                             setChartOptions({isLoading: false});
-                        },1500);
+                        }, 800);
                         setIsChartDataAvailable(false);
                     }
                     console.log("user want a column chart in expenses view");
@@ -363,12 +424,12 @@ function dashboard(props) {
                         const createHorizontalColumnChartResponse = await createHorizontalColumnChart(createDataForSuppliersChartResponse);
                         setTimeout(() => {
                             setChartOptions(createHorizontalColumnChartResponse);
-                        },1500);
+                        }, 800);
                     }
                     else {
                         setTimeout(() => {
                             setChartOptions({isLoading: false});
-                        },1500);
+                        }, 800);
                         setIsChartDataAvailable(false);
                     }
                     console.log("user want a horizontal column chart in suppliers view");
@@ -380,12 +441,12 @@ function dashboard(props) {
                         const createHorizontalColumnChartResponse = await createPieChart(createDataForSuppliersChartResponse);
                         setTimeout(() => {
                             setChartOptions(createHorizontalColumnChartResponse);
-                        },1500);
+                        }, 800);
                     }
                     else {
                         setTimeout(() => {
                             setChartOptions({isLoading: false});
-                        },1500);
+                        }, 800);
                         setIsChartDataAvailable(false);
                     }
 
@@ -1094,12 +1155,12 @@ function dashboard(props) {
             <div className={"db-btn"}>
                 <div className={"col-lg-12 p-2"}>
                     <label className={"db-label"} style={{visibility:"hidden"}}>Filter {visualType}</label><br/>
-                    <div style={{display:"flex",justifyContent:"space-evenly"}}>
-                        <button onClick={handleLineChart} className={"mt-1 " + (visualType == 1?"filter-active-btn ":"filter-btn ") + (viewAs === "expenses"?"d-block":"d-none")}><FontAwesomeIcon icon={faLineChart}/></button>
-                        <button onClick={handleColumnChart} className={"mt-1 " + (visualType == 2?"filter-active-btn ":"filter-btn ") + (viewAs === "expenses"?"d-block":"d-none")}><FontAwesomeIcon icon={faChartColumn}/></button>
-                        <button onClick={handleHorizontalColumnChart} className={"mt-1 horizontal-column-chart " + (visualType == 4?"filter-active-btn ":"filter-btn ") + (viewAs === "suppliers"?"d-block":"d-none")}><FontAwesomeIcon icon={faChartColumn}/></button>
-                        <button onClick={handlePieChart} className={"mt-1 " + (visualType == 5?"filter-active-btn ":"filter-btn ") + (viewAs === "suppliers"?"d-block":"d-none")}><FontAwesomeIcon icon={faPieChart}/></button>
-                        <button onClick={handleTableView} className={"mt-1 " + (visualType == 3?"filter-active-btn ":"filter-btn ")}><FontAwesomeIcon icon={faTableList}/></button>
+                    <div style={{display:"flex",justifyContent:"center"}}>
+                        <button onClick={handleLineChart} className={"mt-1 " + (visualType == 1?"filter-active-btn filter-left ":"filter-btn filter-left ") + (viewAs === "expenses"?"d-block":"d-none")}><FontAwesomeIcon icon={faLineChart}/></button>
+                        <button onClick={handleColumnChart} className={"mt-1 " + (visualType == 2?"filter-active-btn filter-center ":"filter-btn filter-center ") + (viewAs === "expenses"?"d-block":"d-none")}><FontAwesomeIcon icon={faChartColumn}/></button>
+                        <button onClick={handleHorizontalColumnChart} className={"mt-1 horizontal-column-chart " + (visualType == 4?"filter-active-btn filter-left ":"filter-btn filter-left ") + (viewAs === "suppliers"?"d-block":"d-none")}><FontAwesomeIcon icon={faChartColumn}/></button>
+                        <button onClick={handlePieChart} className={"mt-1 " + (visualType == 5?"filter-active-btn filter-center ":"filter-btn filter-center ") + (viewAs === "suppliers"?"d-block":"d-none")}><FontAwesomeIcon icon={faPieChart}/></button>
+                        <button onClick={handleTableView} className={"mt-1 " + (visualType == 3?"filter-active-btn filter-right ":"filter-btn filter-right ")}><FontAwesomeIcon icon={faTableList}/></button>
                     </div>
                 </div>
             </div>

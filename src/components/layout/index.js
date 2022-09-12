@@ -21,7 +21,7 @@ function layout(props) {
                 if(response.status) {
                     navigate("/login");
                 }
-            },1500);
+            }, 800);
         }
         return isExpired;
     }

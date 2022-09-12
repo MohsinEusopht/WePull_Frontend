@@ -119,7 +119,7 @@ function login(props) {
     }
 
     return (<div style={{position:"relative",width:"100%",height:"100vh", display: isLogin?"block":"none"}} className={"multiBackground"}>
-        <div className={"col-md-4 offset-md-4 centerDiv"}>
+        <div className={"col-lg-4 offset-lg-4 col-md-6 offset-md-3 centerDiv"}>
             <img src={logo} width={"40%"} className={"mx-auto d-block"}/>
             <hr/>
             <h4>Login</h4>

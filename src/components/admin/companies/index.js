@@ -86,7 +86,7 @@ function companies(props) {
 
             setTimeout(() => {
                 props.setLoading(false);
-                },1500)
+                }, 800)
 
         });
         // toast.success('Successfully toasted!')
@@ -188,7 +188,7 @@ function companies(props) {
                                             // toast.success(response.message);
                                             navigate("/login");
                                         }
-                                    }, 1500);
+                                    }, 800);
                                     // toast.success(res.data.active_company + " activated.");
                                 } else {
                                     toast.error(res.data.message);
@@ -210,7 +210,7 @@ function companies(props) {
                                             // toast.success(response.message);
                                             navigate("/login");
                                         }
-                                    }, 1500);
+                                    }, 800);
                                     // toast.success(res.data.active_company + " activated.");
                                 } else {
                                     toast.error(res.data.message);
