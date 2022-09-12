@@ -56,6 +56,7 @@ function profile(props) {
                     setEmail(res.data.user.email);
                 }
                 else {
+                    refreshingEmail = false;
                     toast.error(res.data.message);
                 }
             });
